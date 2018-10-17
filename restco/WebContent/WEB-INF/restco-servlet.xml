@@ -1,0 +1,67 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd 
+        http://www.springframework.org/schema/jee
+        http://www.springframework.org/schema/jee/spring-jee.xsd">
+
+<!-- <mvc:annotation-driven/> -->
+<context:component-scan base-package="com.devone" />
+ 
+ <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/serviceco"/>
+        <property name="username" value="root"/>
+        <property name="password" value="admin"/>
+  </bean>
+   <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:hibernate.cfg.xml" />
+    </bean>
+    
+ 	<!-- <tx:annotation-driven /> -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+	    <property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="orderDAO" class="com.devone.model.OrderImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="servicesDAO" class="com.devone.model.ServicesImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="utilsDAO" class="com.devone.model.UtilsImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+<!--  <mvc:resources location="/resources/" /> -->
+
+
+<!-- <jee:jndi-lookup id="myDataSource" jndi-name="java:/serviceco"/> -->
+<!--  <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/usersdb"/>
+        <property name="username" value="root"/>
+        <property name="password" value="P@ssw0rd"/>
+    </bean>	
+    
+    <bean id="sessionFactory"
+        class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:hibernate.cfg.xml" />
+    </bean> -->
+  
+    
+	
+     <!-- <bean id="txManager" class="org.springframework.transaction.jta.JtaTransactionManager" /> -->
+<!-- <tx:annotation-driven> -->
+   
+
+	
+
+
+</beans>

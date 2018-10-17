@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+<script>
+
+
+
+function myFunction(arr) {
+    var out = "";
+    var i,j;
+    for(i = 0; i < arr.length; i++) {
+	var vArr1 = arr[i];
+        for(j=0; j<vArr1.length; j++){
+		out += vArr1[j] + "<br>";
+	}
+    }
+    document.getElementById("id01").innerHTML = out;
+}
+var xmlhttp = new XMLHttpRequest();
+var url = "http://localhost:8080/restco/order/list/false/1/1";
+
+xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        var myArr = JSON.parse(this.responseText);
+        myFunction(myArr);
+    }
+};
+xmlhttp.open("GET", url, true);
+xmlhttp.send();
+/*var text = '{"name":"John Johnson","street":"Oslo West 16","phone":"555 1234567"}';
+
+var obj = JSON.parse(text);
+
+document.getElementById("demo").innerHTML =
+obj.name + "<br>" +
+obj.street + "<br>" +
+obj.phone;*/
+</script>
+<h2>JSON Object Creation in JavaScript</h2>
+
+<p id="demo"></p>
+
+
+
+</body>
+</html>
